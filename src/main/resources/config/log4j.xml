@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+	<root>  
+        <priority value ="info"/><!-- 默认日志级别修改这里 -->  
+		<appender-ref ref="debugLog" />
+		<appender-ref ref="infoLog" />
+		<appender-ref ref="warnLog" />
+		<appender-ref ref="errorLog" />
+		<appender-ref ref="stdout" />  
+    </root>  
+<!--  	 <category name="com.beichende">
+        <priority value="debug"/>  
+		<appender-ref ref="debugLog" />
+		<appender-ref ref="infoLog" />
+		<appender-ref ref="warnLog" />
+		<appender-ref ref="errorLog" />
+		<appender-ref ref="stdout" />
+    </category>  -->
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+	    <param name="Target" value="System.out" />
+	    <param name="Threshold" value="DEBUG" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%-5p] %c [%t] - %m%n" />
+		</layout>
+	</appender>
+	<appender name="debugLog" class="org.apache.log4j.RollingFileAppender">
+		<param name="encoding" value="UTF-8" />
+		<param name="File" value="/home/bingdeng/javaDev/tomcat/healthlifelogs/debug.log" />
+		<param name="maxFileSize" value="2000KB" />
+		<param name="maxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%-5p] %c [%t] - %m%n" />
+		</layout>
+		<!-- <span style="color: #ff0000;">
+			<filter class="org.apache.log4j.varia.LevelRangeFilter">
+				<param name="LevelMax" value="DEBUG" />
+				<param name="LevelMin" value="DEBUG" />
+			</filter>
+		</span> -->
+	</appender>
+	<appender name="infoLog" class="org.apache.log4j.RollingFileAppender">
+		<param name="encoding" value="UTF-8" />
+		<param name="File" value="/home/bingdeng/javaDev/tomcat/healthlifelogs/info.log" />
+		<param name="maxFileSize" value="2000KB" />
+		<param name="maxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%-5p] %c [%t] - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="INFO" />
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+	<appender name="warnLog" class="org.apache.log4j.RollingFileAppender">
+		<param name="encoding" value="UTF-8" />
+		<param name="File" value="/home/bingdeng/javaDev/tomcat/healthlifelogs/warn.log" />
+		<param name="maxFileSize" value="2000KB" />
+		<param name="maxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%-5p] %c [%t] - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="WARN" />
+			<param name="LevelMin" value="WARN" />
+		</filter>
+	</appender>
+	<appender name="errorLog" class="org.apache.log4j.RollingFileAppender">
+		<param name="encoding" value="UTF-8" />
+		<param name="File" value="/home/bingdeng/javaDev/tomcat/healthlifelogs/error.log" />
+		<param name="maxFileSize" value="2000KB" />
+		<param name="maxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%-5p] %c - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="ERROR" />
+		</filter>
+	</appender>
+</log4j:configuration>

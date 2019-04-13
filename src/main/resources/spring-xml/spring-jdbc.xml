@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"        
+    xmlns:mvc="http://www.springframework.org/schema/mvc"     
+    xmlns:tx="http://www.springframework.org/schema/tx"  
+    xmlns:aop="http://www.springframework.org/schema/aop"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"              
+    xsi:schemaLocation="                                               
+            http://www.springframework.org/schema/beans    
+            http://www.springframework.org/schema/beans/spring-beans.xsd    
+            http://www.springframework.org/schema/context     
+            http://www.springframework.org/schema/context/spring-context.xsd    
+            http://www.springframework.org/schema/mvc    
+            http://www.springframework.org/schema/mvc/spring-mvc.xsd  
+            http://www.springframework.org/schema/tx   
+            http://www.springframework.org/schema/tx/spring-tx.xsd  
+            http://www.springframework.org/schema/aop  
+            http://www.springframework.org/schema/aop/spring-aop.xsd "  
+   >   <!-- default-autowire="byName" -->
+    
+    <!--引入数据库配置文件  -->
+   <!-- <context:property-placeholder location="classpath:datasource/jdbc.properties"/>
+    -->
+   <!--  JNDI数据源 ：利用这个，可在应用服务器会上配置数据源 如名字(jdbc/orclight)-->
+   <!--  <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">        
+        <property name="jndiName" value="java:comp/env/jdbc/orclight"/>        
+	</bean>  -->
+	
+    <!--c3p0数据源  -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    	<!--orcl  -->
+    	<!-- <property name="driverClass" value="oracle.jdbc.driver.OracleDriver "/>        
+        <property name="jdbcUrl" value="jdbc:oracle:thin:@172.19.34.6:1521:ORCL"/>        
+        <property name="user" value="orclight"/>        
+        <property name="password" value="123456"/> -->
+        
+        <!--mysql  -->
+        <property name="driverClass" value="${jdbc.driver}"/>        
+        <property name="jdbcUrl" value="${jdbc.url}"/>        
+        <property name="user" value="${jdbc.user}"/>        
+        <property name="password" value="${jdbc.password}"/>
+	        
+	    <!-- 初始化时获取的连接数-->
+	    <property name="initialPoolSize" value="${jdbc.initialPoolSize}"/>
+	    <!-- 连接池中保留的最小连接数-->
+	    <property name="minPoolSize" value="${jdbc.minPoolSize}"/>
+	    <!-- 连接池中保留的最大连接数-->
+	    <property name="maxPoolSize" value="${jdbc.maxPoolSize}"/>
+	    <!-- 关闭链接后不自动commit-->
+	    <property name="autoCommitOnClose" value="${jdbc.autoCommitOnClose}"/>
+	    <!-- 获取连接超时时间-->
+	    <property name="checkoutTimeout" value="${jdbc.checkoutTimeout}"/>
+	    <!-- 60秒内未使用则连接被丢弃-->
+	    <property name="maxIdleTime" value="${jdbc.maxIdleTime}"/>
+	    <!-- 连接耗尽的时候c3p0一次同时获取的连接数-->
+	    <property name="acquireIncrement" value="${jdbc.acquireIncrement}"/> 
+	     <!-- 获取新连接失败后重复尝试的次数-->
+	    <property name="acquireRetryAttempts" value="${jdbc.acquireRetryAttempts}"/>
+    </bean>
+    <!--配置mybatis  -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    	<!--(必需)   spring中数据源引用  -->
+    	<property name="dataSource" ref="dataSource" />   
+    	<!--  (可选)Mybatis自身的配置文件 -->
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+        <!-- mybatis的映射文件 -->
+        <property name="mapperLocations" value="classpath:mapper/*.xml" />  
+        <!--  (可选)要映射类(entity)的包路径，如果使用了这种方式，则configLocation中不必再进行声明 -->
+         <property name="typeAliasesPackage" value="com.bingdeng.sso.entity" />
+    </bean>
+</beans>  
